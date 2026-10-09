@@ -24,18 +24,15 @@ const Main = () => {
     const [editingIndex, setEditingIndex] = useState(null); 
     const [editingValue, setEditingValue] = useState(''); 
 
-    // States ควบคุม Popups
     const [showAlertPopup, setShowAlertPopup] = useState(false);
-    const [alertMessage, setAlertMessage] = useState(''); // เพิ่ม State เก็บข้อความแจ้งเตือนที่เปลี่ยนไปตามบริบท
+    const [alertMessage, setAlertMessage] = useState(''); 
     const [showClearConfirmPopup, setShowClearConfirmPopup] = useState(false);
     
-    // States สำหรับระบบสุ่ม
     const [isRandomizing, setIsRandomizing] = useState(false);
     const [showResultPopup, setShowResultPopup] = useState(false);
     const [shufflingFood, setShufflingFood] = useState(''); 
     const [selectedFood, setSelectedFood] = useState(''); 
 
-    // ฟังก์ชันเพิ่มเมนู
     const handleAddFood = (e) => {
         e.preventDefault(); 
         
@@ -86,7 +83,6 @@ const Main = () => {
         setEditingValue(currentFood);
     };
 
-    // ฟังก์ชันบันทึกการแก้ไขเมนู
     const saveEdit = (e, index) => {
         e.preventDefault();
         const trimmedValue = editingValue.trim();
@@ -96,11 +92,9 @@ const Main = () => {
             return;
         }
 
-        // เช็คว่าชื่อที่แก้ใหม่ ไปซ้ำกับรายการอื่น (i !== index) ที่มีอยู่แล้วหรือไม่
         const isDuplicate = foodList.some((item, i) => i !== index && item === trimmedValue);
         
         if (isDuplicate) {
-            // ถ้าซ้ำ ให้แสดง Popup แจ้งเตือนและหยุดการทำงาน (ไม่อัปเดตข้อมูล)
             setAlertMessage('ชื่อเมนูนี้มีอยู่ในรายการแล้ว โปรดใช้ชื่ออื่น');
             setShowAlertPopup(true);
             return; 
@@ -112,7 +106,6 @@ const Main = () => {
         setEditingIndex(null);
     };
 
-    // ฟังก์ชันสุ่มอาหาร
     const handleRandomClick = () => {
         if (foodList.length === 0) return;
 
@@ -140,25 +133,26 @@ const Main = () => {
     };
 
     return (
-        <div className='bg-white shadow-2xl rounded-2xl w-[500px] p-8 border border-gray-100 font-sans relative'>
+        <div className='bg-[#F0EEE9] shadow-2xl rounded-2xl w-full max-w-[500px] p-5 sm:p-8 border border-white font-sans relative mx-auto'>
             
-            {/* Header */}
-            <header className='text-center uppercase font-extrabold mb-6'>
-                <div className="text-3xl bg-clip-text text-transparent bg-gradient-to-r from-orange-500 to-red-500 flex items-center justify-center gap-3">
-                    <MdRestaurantMenu className="text-orange-500" /> 
+            <header className='text-center uppercase font-extrabold mb-5 sm:mb-6'>
+                <div className="text-2xl sm:text-3xl text-[#393027] flex items-center justify-center gap-2 sm:gap-3 flex-wrap">
+                    {/* ไอคอนช้อนส้อม เปลี่ยนเป็นสีชมพู */}
+                    <MdRestaurantMenu className="text-[#9BAD50]" /> 
                     <span>Random Food</span>
-                    <FaDice className="text-red-500" />
+                    <FaDice className="text-[#9BAD50]" /> 
                 </div>
-                <p className='text-gray-400 text-sm mt-1 normal-case'>สุ่มเมนูอาหารมื้อนี้กินอะไรดี?</p>
+                <p className='text-[#393027]/60 text-xs sm:text-sm mt-1 normal-case'>สุ่มเมนูอาหารมื้อนี้กินอะไรดี?</p>
             </header>
 
             <main>
-                <div className="container">
+                <div className="w-full">
                     <form className='flex flex-col' onSubmit={handleAddFood}>
                         <label className='mb-2'>
-                            <p className='mb-2 text-gray-700 font-medium'>กรุณากรอกชื่อเมนูที่ต้องการให้สุ่ม :</p>
+                            <p className='mb-2 text-[#393027] font-medium text-sm sm:text-base'>กรุณากรอกชื่อเมนูที่ต้องการให้สุ่ม :</p>
                             <input 
-                                className='bg-gray-50 text-gray-800 px-4 py-2 border border-gray-300 rounded-lg w-full h-[48px] focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200 transition-all' 
+                                // ช่อง Input ลดสีให้จางลงเป็นโปร่งแสง 20%
+                                className='bg-[#a4b5bf]/20 text-[#393027] px-4 py-2 rounded-lg w-full h-[48px] focus:outline-none focus:ring-4 focus:ring-[#a4b5bf]/40 transition-all text-sm sm:text-base placeholder:text-[#393027]/50 shadow-inner' 
                                 type="text" 
                                 placeholder='เช่น ข้าวกะเพรา บะหมี่หมูกรอบ, สุกี้' 
                                 value={inputValue} 
@@ -169,14 +163,15 @@ const Main = () => {
                         <div className="flex flex-col gap-3 mt-2">
                             <button 
                                 type="submit" 
-                                className='bg-orange-500 text-white font-semibold rounded-lg w-full h-[48px] shadow-md hover:bg-orange-600 hover:shadow-lg active:scale-95 transition-all flex items-center justify-center gap-2'
+                                className='bg-[#9BAD50] text-[#393027] font-semibold rounded-lg w-full h-[48px] shadow-sm hover:opacity-90 hover:shadow-md active:scale-95 transition-all flex items-center justify-center gap-2 text-sm sm:text-base'
                             >
                                 <FaPlus /> เพิ่มเมนูอาหาร
                             </button>
                             
+                            {/* ปุ่มล้างรายการทั้งหมด เปลี่ยนเป็นสีน้ำตาล */}
                             <a 
-                                className={`text-sm text-center underline transition-colors flex items-center justify-center gap-1 mt-1 
-                                    ${foodList.length > 0 ? 'text-gray-400 cursor-pointer hover:text-red-500' : 'text-gray-300 cursor-not-allowed no-underline'}`}
+                                className={`text-xs sm:text-sm text-center underline transition-colors flex items-center justify-center gap-1 mt-1 
+                                    ${foodList.length > 0 ? 'text-[#393027] cursor-pointer hover:opacity-70' : 'text-[#393027]/40 cursor-not-allowed no-underline'}`}
                                 href="#"
                                 onClick={handleClearAllClick}
                             >
@@ -185,51 +180,49 @@ const Main = () => {
                         </div>
                     </form>
 
-                    <div className='mt-6 border-t border-gray-100 pt-6'>
+                    <div className='mt-5 sm:mt-6 border-t border-[#CABCCD]/60 pt-5 sm:pt-6'>
                         <div className='flex justify-between items-end mb-3'>
-                            <p className='text-gray-700 font-semibold flex items-center gap-2'>
-                                <MdFormatListBulleted className="text-orange-500 text-xl" />
+                            <p className='text-[#393027] font-semibold flex items-center gap-2 text-sm sm:text-base'>
+                                {/* ไอคอนรายการเมนู เปลี่ยนเป็นสีชมพู */}
+                                <MdFormatListBulleted className="text-[#9BAD50] text-xl" />
                                 รายการเมนู ({foodList.length})
                             </p>
                         </div>
                         
-                        {/* กล่องแสดงรายการอาหาร */}
-                        <div id='listFood' className='bg-gray-50 border border-gray-200 p-4 rounded-xl min-h-[120px] max-h-[250px] overflow-y-auto shadow-inner'>
+                        <div id='listFood' className='bg-[#a4b5bf] p-3 sm:p-4 rounded-xl min-h-[120px] max-h-[250px] overflow-y-auto shadow-inner'>
                             {foodList.length === 0 ? (
-                                <div className='h-full flex flex-col items-center justify-center text-gray-400 gap-2 mt-4'>
-                                    <MdOutlineRestaurant className="text-4xl text-gray-300" />
-                                    <p>ยังไม่มีรายการอาหาร</p>
+                                <div className='h-full flex flex-col items-center justify-center text-[#393027]/40 gap-2 mt-4'>
+                                    <MdOutlineRestaurant className="text-3xl sm:text-4xl" />
+                                    <p className='text-sm sm:text-base'>ยังไม่มีรายการอาหาร</p>
                                 </div>
                             ) : (
                                 <ul className='space-y-2'>
                                     {foodList.map((food, index) => (
-                                        <li key={index} className='flex items-center justify-between text-gray-700 bg-white px-3 py-2 rounded-lg border border-gray-100 shadow-sm min-h-[44px]'>
+                                        <li key={index} className='flex items-center justify-between text-[#393027] bg-[#F0EEE9] px-2 sm:px-3 py-2 rounded-lg shadow-sm min-h-[44px] text-sm sm:text-base'>
                                             
                                             {editingIndex === index ? (
                                                 <form onSubmit={(e) => saveEdit(e, index)} className="flex items-center gap-2 w-full">
-                                                    <span className='bg-orange-100 text-orange-600 font-bold text-xs rounded-full min-w-[24px] h-6 flex items-center justify-center px-1'>
+                                                    <span className='bg-[#393027] text-[#F0EEE9] font-bold text-xs rounded-full min-w-[24px] h-6 flex items-center justify-center px-1'>
                                                         {index + 1}
                                                     </span>
                                                     <input 
                                                         type="text" 
                                                         value={editingValue} 
                                                         onChange={(e) => setEditingValue(e.target.value)}
-                                                        className="flex-1 px-2 py-1 text-sm border-b-2 border-orange-400 focus:outline-none bg-gray-50"
+                                                        className="flex-1 w-full px-2 py-1 text-sm border-b-2 border-[#393027] focus:outline-none bg-transparent min-w-0"
                                                         autoFocus
                                                     />
-                                                    <div className="flex gap-1">
+                                                    <div className="flex gap-1 shrink-0">
                                                         <button 
                                                             type="submit" 
-                                                            className='text-green-500 hover:bg-green-50 p-2 rounded-full transition-colors'
-                                                            title="บันทึก"
+                                                            className='text-[#9BAD50] hover:bg-[#9BAD50]/20 p-1.5 sm:p-2 rounded-full transition-colors'
                                                         >
                                                             <FaCheck />
                                                         </button>
                                                         <button 
                                                             type="button" 
                                                             onClick={() => setEditingIndex(null)}
-                                                            className='text-gray-400 hover:bg-gray-50 p-2 rounded-full transition-colors'
-                                                            title="ยกเลิก"
+                                                            className='text-[#393027]/50 hover:bg-[#a4b5bf]/40 p-1.5 sm:p-2 rounded-full transition-colors'
                                                         >
                                                             <FaTimes />
                                                         </button>
@@ -237,8 +230,8 @@ const Main = () => {
                                                 </form>
                                             ) : (
                                                 <>
-                                                    <div className='flex items-center gap-3 overflow-hidden'>
-                                                        <span className='bg-orange-100 text-orange-600 font-bold text-xs rounded-full min-w-[24px] h-6 flex items-center justify-center px-1 shrink-0'>
+                                                    <div className='flex items-center gap-2 sm:gap-3 overflow-hidden'>
+                                                        <span className='bg-[#393027] text-[#F0EEE9] font-bold text-xs rounded-full min-w-[24px] h-6 flex items-center justify-center px-1 shrink-0'>
                                                             {index + 1}
                                                         </span>
                                                         <span className='truncate'>{food}</span>
@@ -247,15 +240,13 @@ const Main = () => {
                                                     <div className='flex gap-1 shrink-0'>
                                                         <button 
                                                             onClick={() => startEditing(index, food)}
-                                                            className='text-gray-400 hover:text-orange-500 hover:bg-orange-50 p-2 rounded-full transition-colors focus:outline-none'
-                                                            title="แก้ไขเมนูนี้"
+                                                            className='text-[#393027]/40 hover:text-[#a4b5bf] hover:bg-[#a4b5bf]/20 p-1.5 sm:p-2 rounded-full transition-colors focus:outline-none'
                                                         >
                                                             <FaPencilAlt />
                                                         </button>
                                                         <button 
                                                             onClick={() => handleRemoveItem(index)}
-                                                            className='text-gray-400 hover:text-red-500 hover:bg-red-50 p-2 rounded-full transition-colors focus:outline-none'
-                                                            title="ลบเมนูนี้"
+                                                            className='text-[#393027]/40 hover:text-red-500 hover:bg-red-100 p-1.5 sm:p-2 rounded-full transition-colors focus:outline-none'
                                                         >
                                                             <FaTrashAlt />
                                                         </button>
@@ -270,10 +261,11 @@ const Main = () => {
                         
                         <button 
                             onClick={handleRandomClick}
-                            className={`rounded-lg w-full h-[54px] mt-6 font-bold text-lg shadow-lg transition-all flex items-center justify-center gap-2
+                            // ปุ่มสุ่มเลย เปลี่ยนเป็นสีน้ำตาล ตัวหนังสือสีขาว
+                            className={`rounded-lg w-full h-[50px] sm:h-[54px] mt-5 sm:mt-6 font-bold text-base sm:text-lg shadow-md transition-all flex items-center justify-center gap-2
                                 ${foodList.length > 0 
-                                    ? 'bg-gradient-to-r from-green-400 to-emerald-600 text-white hover:from-green-500 hover:to-emerald-700 hover:shadow-xl active:scale-95' 
-                                    : 'bg-gray-200 text-gray-400 cursor-not-allowed shadow-none'
+                                    ? 'bg-[#393027] text-white hover:opacity-90 hover:shadow-lg active:scale-95' 
+                                    : 'bg-[#393027]/50 text-white cursor-not-allowed shadow-none'
                                 }`} 
                             type='button'
                             disabled={foodList.length === 0}
@@ -286,19 +278,17 @@ const Main = () => {
 
             {/* ================= MODALS / POPUPS ================= */}
 
-            {/* 1. Popup แจ้งเตือนเมนูซ้ำ (ใช้แสดงข้อความจาก State alertMessage) */}
             {showAlertPopup && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm transition-opacity">
-                    <div className="bg-white rounded-2xl p-6 w-[350px] shadow-2xl transform text-center animate-[bounce_0.3s_ease-out]">
-                        <div className="w-16 h-16 bg-red-100 text-red-500 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl">
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm transition-opacity px-4">
+                    <div className="bg-[#F0EEE9] rounded-2xl p-6 w-full max-w-[350px] shadow-2xl transform text-center animate-[bounce_0.3s_ease-out]">
+                        <div className="w-14 h-14 sm:w-16 sm:h-16 bg-[#a4b5bf]/30 text-[#a4b5bf] rounded-full flex items-center justify-center mx-auto mb-4 text-2xl sm:text-3xl">
                             <FaExclamationTriangle />
                         </div>
-                        <h3 className="text-xl font-bold text-gray-800 mb-2">ข้อมูลซ้ำ!</h3>
-                        {/* ดึงข้อความมาแสดงตรงนี้ */}
-                        <p className="text-gray-500 text-sm mb-6">{alertMessage}</p>
+                        <h3 className="text-lg sm:text-xl font-bold text-[#393027] mb-2">ข้อมูลซ้ำ!</h3>
+                        <p className="text-[#393027]/70 text-xs sm:text-sm mb-6">{alertMessage}</p>
                         <button 
                             onClick={() => setShowAlertPopup(false)} 
-                            className="bg-gray-800 text-white font-semibold rounded-lg w-full h-[40px] hover:bg-gray-900 transition-colors active:scale-95"
+                            className="bg-[#393027] text-[#F0EEE9] font-semibold rounded-lg w-full h-[40px] hover:opacity-90 transition-opacity active:scale-95 text-sm sm:text-base"
                         >
                             รับทราบ
                         </button>
@@ -306,26 +296,25 @@ const Main = () => {
                 </div>
             )}
 
-            {/* 2. Popup ยืนยันการล้างรายการทั้งหมด */}
             {showClearConfirmPopup && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm transition-opacity">
-                    <div className="bg-white rounded-2xl p-6 w-[350px] shadow-2xl transform text-center animate-[bounce_0.3s_ease-out]">
-                        <div className="w-16 h-16 bg-red-50 text-red-500 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl">
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm transition-opacity px-4">
+                    <div className="bg-[#F0EEE9] rounded-2xl p-6 w-full max-w-[350px] shadow-2xl transform text-center animate-[bounce_0.3s_ease-out]">
+                        <div className="w-14 h-14 sm:w-16 sm:h-16 bg-[#a4b5bf]/30 text-[#a4b5bf] rounded-full flex items-center justify-center mx-auto mb-4 text-2xl sm:text-3xl">
                             <FaTrashAlt />
                         </div>
-                        <h3 className="text-xl font-bold text-gray-800 mb-2">ยืนยันการล้างข้อมูล?</h3>
-                        <p className="text-gray-500 text-sm mb-6">รายการอาหารทั้งหมดที่คุณเพิ่มไว้จะถูกลบ<br/>คุณแน่ใจหรือไม่?</p>
+                        <h3 className="text-lg sm:text-xl font-bold text-[#393027] mb-2">ยืนยันการล้างข้อมูล?</h3>
+                        <p className="text-[#393027]/70 text-xs sm:text-sm mb-6">รายการอาหารทั้งหมดที่คุณเพิ่มไว้จะถูกลบ<br/>คุณแน่ใจหรือไม่?</p>
                         
-                        <div className="flex gap-3">
+                        <div className="flex gap-2 sm:gap-3">
                             <button 
                                 onClick={() => setShowClearConfirmPopup(false)} 
-                                className="bg-gray-100 text-gray-700 font-semibold rounded-lg w-full h-[44px] hover:bg-gray-200 transition-colors active:scale-95"
+                                className="bg-[#a4b5bf] text-[#393027] font-semibold rounded-lg w-full h-[40px] sm:h-[44px] hover:opacity-90 transition-colors active:scale-95 text-sm sm:text-base"
                             >
                                 ยกเลิก
                             </button>
                             <button 
                                 onClick={confirmClearAll} 
-                                className="bg-red-500 text-white font-semibold rounded-lg w-full h-[44px] hover:bg-red-600 transition-colors active:scale-95 shadow-md"
+                                className="bg-[#393027] text-[#F0EEE9] font-semibold rounded-lg w-full h-[40px] sm:h-[44px] hover:opacity-90 transition-opacity active:scale-95 shadow-sm text-sm sm:text-base"
                             >
                                 ยืนยันลบ
                             </button>
@@ -334,31 +323,30 @@ const Main = () => {
                 </div>
             )}
 
-            {/* 3. Popup สุ่มเมนูอาหาร */}
             {showResultPopup && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-md transition-opacity">
-                    <div className="bg-white rounded-3xl p-8 w-[400px] shadow-2xl text-center flex flex-col items-center">
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-md transition-opacity px-4">
+                    <div className="bg-[#F0EEE9] rounded-3xl p-6 sm:p-8 w-full max-w-[400px] shadow-2xl text-center flex flex-col items-center">
                         
                         {isRandomizing ? (
                             <div className="flex flex-col items-center w-full">
-                                <FaDice className="text-6xl text-orange-500 animate-spin mb-6" />
-                                <h3 className="text-xl font-bold text-gray-700 mb-4 flex items-center gap-2">
-                                    <FaSpinner className="animate-spin text-orange-500" /> กำลังสุ่มเมนู...
+                                <FaDice className="text-5xl sm:text-6xl text-[#a4b5bf] animate-spin mb-5 sm:mb-6" />
+                                <h3 className="text-lg sm:text-xl font-bold text-[#393027] mb-4 flex items-center gap-2">
+                                    <FaSpinner className="animate-spin text-[#9BAD50]" /> กำลังสุ่มเมนู...
                                 </h3>
-                                <div className="bg-orange-100 text-orange-600 font-extrabold text-3xl py-4 px-6 rounded-xl w-full truncate animate-pulse">
+                                <div className="bg-[#a4b5bf]/30 text-[#393027] font-extrabold text-2xl sm:text-3xl py-3 sm:py-4 px-4 sm:px-6 rounded-xl w-full truncate animate-pulse border border-[#a4b5bf]">
                                     {shufflingFood || '...'}
                                 </div>
                             </div>
                         ) : (
                             <div className="flex flex-col items-center w-full animate-[wiggle_1s_ease-in-out]">
-                                <MdCelebration className="text-7xl text-emerald-500 mb-4 animate-bounce" />
-                                <h3 className="text-lg text-gray-500 font-medium mb-2">มื้อนี้คุณได้กิน...</h3>
-                                <div className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-green-500 to-emerald-600 mb-8 py-2 break-words max-w-[100%]">
+                                <MdCelebration className="text-6xl sm:text-7xl text-[#9BAD50] mb-3 sm:mb-4 animate-bounce" />
+                                <h3 className="text-base sm:text-lg text-[#393027]/70 font-medium mb-1 sm:mb-2">มื้อนี้คุณได้กิน...</h3>
+                                <div className="text-3xl sm:text-4xl font-extrabold text-[#a4b5bf] mb-6 sm:mb-8 py-2 break-words max-w-[100%] leading-tight">
                                     {selectedFood}
                                 </div>
                                 <button 
                                     onClick={() => setShowResultPopup(false)} 
-                                    className="bg-gray-100 text-gray-700 font-bold rounded-xl w-full h-[50px] hover:bg-gray-200 transition-colors active:scale-95"
+                                    className="bg-[#a4b5bf] text-[#393027] font-bold rounded-xl w-full h-[46px] sm:h-[50px] hover:opacity-90 transition-colors active:scale-95 text-sm sm:text-base shadow-sm"
                                 >
                                     ปิด
                                 </button>
