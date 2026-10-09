@@ -138,9 +138,9 @@ const Main = () => {
             <header className='text-center uppercase font-extrabold mb-5 sm:mb-6'>
                 <div className="text-2xl sm:text-3xl text-[#393027] flex items-center justify-center gap-2 sm:gap-3 flex-wrap">
                     {/* ไอคอนช้อนส้อม เปลี่ยนเป็นสีชมพู */}
-                    <MdRestaurantMenu className="text-[#9BAD50]" /> 
+                    <MdRestaurantMenu className="text-[#c89cab]" /> 
                     <span>Random Food</span>
-                    <FaDice className="text-[#9BAD50]" /> 
+                    <FaDice className="text-[#c89cab]" /> 
                 </div>
                 <p className='text-[#393027]/60 text-xs sm:text-sm mt-1 normal-case'>สุ่มเมนูอาหารมื้อนี้กินอะไรดี?</p>
             </header>
@@ -152,7 +152,7 @@ const Main = () => {
                             <p className='mb-2 text-[#393027] font-medium text-sm sm:text-base'>กรุณากรอกชื่อเมนูที่ต้องการให้สุ่ม :</p>
                             <input 
                                 // ช่อง Input ลดสีให้จางลงเป็นโปร่งแสง 20%
-                                className='bg-[#a4b5bf]/20 text-[#393027] px-4 py-2 rounded-lg w-full h-[48px] focus:outline-none focus:ring-4 focus:ring-[#a4b5bf]/40 transition-all text-sm sm:text-base placeholder:text-[#393027]/50 shadow-inner' 
+                                className='bg-[#c89cab]/20 text-[#393027] px-4 py-2 rounded-lg w-full h-[48px] focus:outline-none focus:ring-4 focus:ring-[#c89cab]/40 transition-all text-sm sm:text-base placeholder:text-[#393027]/50 shadow-inner' 
                                 type="text" 
                                 placeholder='เช่น ข้าวกะเพรา บะหมี่หมูกรอบ, สุกี้' 
                                 value={inputValue} 
@@ -184,7 +184,7 @@ const Main = () => {
                         <div className='flex justify-between items-end mb-3'>
                             <p className='text-[#393027] font-semibold flex items-center gap-2 text-sm sm:text-base'>
                                 {/* ไอคอนรายการเมนู เปลี่ยนเป็นสีชมพู */}
-                                <MdFormatListBulleted className="text-[#9BAD50] text-xl" />
+                                <MdFormatListBulleted className="text-[#c89cab] text-xl" />
                                 รายการเมนู ({foodList.length})
                             </p>
                         </div>
@@ -329,11 +329,11 @@ const Main = () => {
                         
                         {isRandomizing ? (
                             <div className="flex flex-col items-center w-full">
-                                <FaDice className="text-5xl sm:text-6xl text-[#a4b5bf] animate-spin mb-5 sm:mb-6" />
+                                <FaDice className="text-5xl sm:text-6xl text-[#9BAD50] animate-spin mb-5 sm:mb-6" />
                                 <h3 className="text-lg sm:text-xl font-bold text-[#393027] mb-4 flex items-center gap-2">
                                     <FaSpinner className="animate-spin text-[#9BAD50]" /> กำลังสุ่มเมนู...
                                 </h3>
-                                <div className="bg-[#a4b5bf]/30 text-[#393027] font-extrabold text-2xl sm:text-3xl py-3 sm:py-4 px-4 sm:px-6 rounded-xl w-full truncate animate-pulse border border-[#a4b5bf]">
+                                <div className="bg-[#9BAD50]/30 text-[#393027] font-extrabold text-2xl sm:text-3xl py-3 sm:py-4 px-4 sm:px-6 rounded-xl w-full truncate animate-pulse border border-[#a4b5bf]">
                                     {shufflingFood || '...'}
                                 </div>
                             </div>
@@ -341,12 +341,12 @@ const Main = () => {
                             <div className="flex flex-col items-center w-full animate-[wiggle_1s_ease-in-out]">
                                 <MdCelebration className="text-6xl sm:text-7xl text-[#9BAD50] mb-3 sm:mb-4 animate-bounce" />
                                 <h3 className="text-base sm:text-lg text-[#393027]/70 font-medium mb-1 sm:mb-2">มื้อนี้คุณได้กิน...</h3>
-                                <div className="text-3xl sm:text-4xl font-extrabold text-[#a4b5bf] mb-6 sm:mb-8 py-2 break-words max-w-[100%] leading-tight">
+                                <div className="text-3xl sm:text-4xl font-extrabold text-[#9BAD50] mb-6 sm:mb-8 py-2 break-words max-w-[100%] leading-tight">
                                     {selectedFood}
                                 </div>
                                 <button 
                                     onClick={() => setShowResultPopup(false)} 
-                                    className="bg-[#a4b5bf] text-[#393027] font-bold rounded-xl w-full h-[46px] sm:h-[50px] hover:opacity-90 transition-colors active:scale-95 text-sm sm:text-base shadow-sm"
+                                    className="bg-[#393027] text-[#F0EEE9] font-bold rounded-xl w-full h-[46px] sm:h-[50px] hover:opacity-90 transition-colors active:scale-95 text-sm sm:text-base shadow-sm"
                                 >
                                     ปิด
                                 </button>
